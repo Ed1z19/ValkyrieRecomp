@@ -1,0 +1,80 @@
+# Autofilled by tools/new_project_layout/probe_disc.py from your legal dump.
+# Review before shipping. Runtime quirks / overlay seeds still need hand work.
+
+[game]
+name = "Valkyrie Profile (USA) (Disc 1)"
+id = "SLUS-01156"
+players = 1
+exe = "disc/SLUS_011.56"
+# Verified as one program on N images (verify_disc_set.py).
+# Disc 1 boots; the rest are data. The runtime builds its disc
+# roster from this list and mounts the SELECTED one (remembered
+# in disc_index), so the launcher can switch discs between runs.
+# Swapping mid-session is MULTI_DISC.md P3 and is not implemented.
+discs = [
+    "disc/Disc1/Valkyrie Profile (USA) (Disc 1).cue",
+    "disc/Disc2/Valkyrie Profile (USA) (Disc 2).cue",
+]
+disc_serials = [
+    "SLUS-01156",
+    "SLUS-01179",
+]
+load_address = "0x80010000"
+entry_pc = "0x80010008"
+text_size = "0x0001F800"
+stack_base = "0x801FFFF0"
+
+# Digests are for data Track 01 (first BINARY FILE / TRACK 01).
+[prepare_disc]
+out_dir = "disc"
+bin_name = "Valkyrie Profile (USA) (Disc 1).bin"
+cue_name = "Valkyrie Profile (USA) (Disc 1).cue"
+boot_exe = "SLUS_011.56"
+known_sizes = [730448880]
+known_md5 = [
+  "f579cb951587081019f91af9458d305b",
+]
+known_sha1 = [
+  "fa13cbde448a47fa87b6c7829df1c5e6215f5f66",
+]
+known_crc32 = [
+  "dd0422d5",
+]
+
+[recompiler]
+seeds = "seeds/ghidra_funcs.txt"
+out_dir = "generated"
+strict = true
+
+[runtime]
+window_title = "Valkyrie Profile (USA) (Disc 1) Recompiled"
+memcard_dir = "saves"
+
+[video]
+renderer = "opengl"
+aspect_ratio = "4:3"
+
+[widescreen]
+offer = true
+full_2d = true
+native_wide = false
+nw_backdrop = false
+
+[widescreen.cull]
+auto_backdrop = true
+auto_screen_x = true
+
+[controller]
+default_mode = "digital"
+
+# Online mount gate: digests + track count + optional TOC fingerprint
+# (see docs/NETPLAY.md).
+multitap_analog = true
+[netplay]
+required_disc_fps = [
+    "a19abe70993cb076f0e2c691da56cdc43e979aff754fd6e70d98e60f33ab9fc4",
+    "9d8b1cf3339f391886be6b9ccfb48568c00bc141c78f78d760c9866d0f9ab563",
+]
+require_cue = true
+required_tracks = 1
+required_disc_fp = "a19abe70993cb076f0e2c691da56cdc43e979aff754fd6e70d98e60f33ab9fc4"
