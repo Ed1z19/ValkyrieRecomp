@@ -1,5 +1,7 @@
 # ValkyrieRecomp
 
+![Gameplay](docs/preview.png)
+
 A native PC recompilation project for **Valkyrie Profile (PlayStation, USA)**,
 built with [PSXRecomp](https://github.com/mstan/psxrecomp) and
 [recomp-ui](https://github.com/mstan/recomp-ui).
