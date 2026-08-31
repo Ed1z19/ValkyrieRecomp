@@ -42,7 +42,7 @@ fi
 if [[ -f "${ROOT}/game_options.toml" ]]; then
   EXTRA_PROJECT+=(--project-file game_options.toml)
 fi
-# Game-owned C that CMakeLists.txt compiles into the runtime â€” mod activation
+# Game-owned C that CMakeLists.txt compiles into the runtime Ã¢â‚¬â€ mod activation
 # plugins live here (CODEGEN_SETUP_SOURCES "src/<game>_mods.c"). Leaving this
 # out ships a CMakeLists that references a file the zip does not contain, so
 # the build dies at configure with "Cannot find source file".
@@ -78,7 +78,7 @@ exec bash "${PACKAGER}" \
   --build-dir "${BUILD_DIR}" \
   --artifact "${ARTIFACT_TAG}" \
   --zip-prefix ValkyrieRecomp \
-  --exe-name ValkyrieRecomp \
+  --exe-name ValkyrieProfileRecomp_Multidisc \
   --display-name "ValkyrieRecomp" \
   --recompiler-build "${RECOMPILER_BUILD}" \
   --version-env RELEASE_VERSION \
@@ -92,3 +92,4 @@ exec bash "${PACKAGER}" \
   --project-dir seeds \
   --project-dir launcher_assets \
   "${EXTRA_PROJECT[@]}"
+
