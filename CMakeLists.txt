@@ -9,7 +9,7 @@ if(NOT EXISTS "${PSXRECOMP_ROOT}/runtime/runtime.cmake")
         "If psxrecomp/ is not a submodule, set -DPSXRECOMP_ROOT=<path-to-psxrecomp>.")
 endif()
 
-project(ValkyrieProfileRecomp_Multidisc LANGUAGES C CXX)
+project(ValkyrieRecomp LANGUAGES C CXX)
 
 # --- Opt-in product surfaces (OFF by default in the framework) -------------
 # Scaffold prompts / flags fill these. Without recomp-ui, PSX_RECOMP_UI is OFF.
@@ -28,10 +28,10 @@ psxrecomp_add_game_runtime(psx-runtime
     # ENABLE_NETPLAY_IF_PRESENT
     # NETPLAY_LOBBY_URL "ws://netplay.retcomm.net:8765"
     ENABLE_SETUP_WIZARD
-    WINDOW_TITLE "ValkyrieProfileRecomp-Multidisc"
+    WINDOW_TITLE "ValkyrieRecomp"
     DEFAULT_GAME_CONFIG_PATH "game.toml"
     MAX_PLAYERS 1
-    # LAUNCHER_BOXART "${CMAKE_CURRENT_SOURCE_DIR}/launcher_assets/img/boxart.tga"
+    LAUNCHER_BOXART "${CMAKE_CURRENT_SOURCE_DIR}/assets/valkyrie_profile_cover.png"
     APP_ICON "${CMAKE_CURRENT_SOURCE_DIR}/assets/psxrecomp.ico"
     GEN_MARKER "generated/SLUS_011.56_dispatch.c"
     GEN_FULL_GLOB "generated/SLUS_011.56_full_*.c"
@@ -50,3 +50,17 @@ foreach(_PSX_RUNTIME_CONFIG game.toml game_options.toml)
             VERBATIM)
     endif()
 endforeach()
+
+# Stage the custom cover used by the launcher runtime
+# (psxrecomp/runtime/src/main.cpp -> assets/valkyrie_profile_cover.png).
+set(_VALKYRIE_COVER "${CMAKE_CURRENT_SOURCE_DIR}/assets/valkyrie_profile_cover.png")
+if(EXISTS "${_VALKYRIE_COVER}")
+    add_custom_command(TARGET psx-runtime POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory
+            "$<TARGET_FILE_DIR:psx-runtime>/assets"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${_VALKYRIE_COVER}"
+            "$<TARGET_FILE_DIR:psx-runtime>/assets/valkyrie_profile_cover.png"
+        COMMENT "Staging Valkyrie Profile cover"
+        VERBATIM)
+endif()

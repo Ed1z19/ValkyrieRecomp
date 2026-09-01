@@ -2,7 +2,7 @@
 # Review before shipping. Runtime quirks / overlay seeds still need hand work.
 
 [game]
-name = "Valkyrie Profile (USA) (Disc 1)"
+name = "ValkyrieRecomp"
 id = "SLUS-01156"
 players = 1
 exe = "disc/SLUS_011.56"
@@ -47,7 +47,7 @@ out_dir = "generated"
 strict = true
 
 [runtime]
-window_title = "Valkyrie Profile (USA) (Disc 1) Recompiled"
+window_title = "ValkyrieRecomp"
 memcard_dir = "saves"
 
 [video]

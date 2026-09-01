@@ -1,4 +1,4 @@
-﻿# Setup-host multi-platform release template for a PSXRecomp *game* repository.
+# Setup-host multi-platform release template for a PSXRecomp *game* repository.
 #
 # Install:
 #   mkdir -p .github/workflows
@@ -10,7 +10,7 @@
 #   ./psxrecomp/.github/actions/{build-emitters,fetch-toolchain (optional embed),stage-setup-sdk}
 #   psxrecomp/tools/ci/*.sh
 #   psxrecomp/tools/{fetch_toolchain,stage_setup_sdk,bundle_mingw_dlls,package_setup_host}.sh
-#   psxrecomp/psxrecomp_cli.py  (CLI lives in the submodule â€” no psxrecomp-sdk/)
+#   psxrecomp/psxrecomp_cli.py  (CLI lives in the submodule — no psxrecomp-sdk/)
 #
 # Title-owned:
 #   CMake setup-host flags, thin scripts/package_setup_release.sh wrapper
@@ -62,7 +62,7 @@ on:
       - 'v*'
 
 concurrency:
-  group: valkyrierecomp-release-${{ github.event_name }}-${{ github.ref }}-${{ github.run_id }}
+  group: ValkyrieRecomp-release-${{ github.event_name }}-${{ github.ref }}-${{ github.run_id }}
   cancel-in-progress: true
 
 permissions:
@@ -128,7 +128,7 @@ jobs:
               esac
               VER="${MA}.${MI}.${PA}"
               TAG="v${VER}"
-              echo "Auto-bumped ${BUMP}: ${LATEST:-none} â†’ ${VER}"
+              echo "Auto-bumped ${BUMP}: ${LATEST:-none} → ${VER}"
             fi
           else
             VER="${RAW#v}"
@@ -140,7 +140,7 @@ jobs:
           fi
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]] && \
              git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null 2>&1; then
-            echo "::error::tag ${TAG} already exists â€” bump again or pass an explicit version"
+            echo "::error::tag ${TAG} already exists — bump again or pass an explicit version"
             exit 1
           fi
           echo "version=${VER}" >>"$GITHUB_OUTPUT"
@@ -285,7 +285,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Use repo-relative paths for tar: Windows GITHUB_WORKSPACE is D:\â€¦
+          # Use repo-relative paths for tar: Windows GITHUB_WORKSPACE is D:\…
           # and GNU tar treats drive-letter abs paths as remote hosts
           # ("Cannot connect to D"). Prefer prefetch_sdl3.sh when present.
           OUT=".cache/sdl3-src"
@@ -309,7 +309,7 @@ jobs:
             bash psxrecomp/tools/ci/prefetch_sdl3.sh --out-dir "${OUT}"
             exit 0
           fi
-          # Submodule may predate the helper â€” inline HTTP/1.1 prefetch.
+          # Submodule may predate the helper — inline HTTP/1.1 prefetch.
           echo "prefetch_sdl3.sh missing; using inline curl --http1.1"
           mkdir -p .cache
           VER=3.4.10
@@ -333,14 +333,14 @@ jobs:
           sdl3_env
 
       # Windows: build emitters with llvm-mingw from cmake-clang-v1 (static CLI).
-      # Zip still omits toolchain/ â€” fetch is for the build machine only.
+      # Zip still omits toolchain/ — fetch is for the build machine only.
       - name: Fetch portable toolchain (Windows emitters)
         if: runner.os == 'Windows'
         uses: ./psxrecomp/.github/actions/fetch-toolchain
         with:
           artifact: ${{ matrix.artifact }}
 
-      # Host/UI-only bumps keep the same psxrecomp gitlink â†’ cache hit skips
+      # Host/UI-only bumps keep the same psxrecomp gitlink → cache hit skips
       # rebuilding emitters (see reuse_cached_emitters / HOST_ONLY_RELEASES.md).
       - name: Emitter cache key
         id: emitter_cache
@@ -453,18 +453,18 @@ jobs:
           # first-run / Generate & rebuild.
           # Title root codegen_setup.c must define
           # psx_game_codegen_forward_if_built (see codegen_setup.c.in) or link
-          # fails â€” main.cpp always calls it, including setup-host CI builds.
+          # fails — main.cpp always calls it, including setup-host CI builds.
           # Netplay titles: set PSX_NETPLAY ON in CMakeLists *before*
           # include(runtime.cmake). ENABLE_NETPLAY_IF_PRESENT alone is too late
           # (option() already cached OFF) and psx_netplay_sched.c still needs
           # recomp_net/session.h. Also add -DPSX_NETPLAY=ON to this cmake
           # invocation for CI belt-and-suspenders (do not leave it commented
-          # mid-continuation â€” that breaks the shell line).
+          # mid-continuation — that breaks the shell line).
           # With PSX_NETPLAY, runtime.cmake defaults RNET_ENABLE_ICE=ON.
           # recomp-net FetchContents libjuice via a pinned URL tarball (not
           # git clone) so AppImage / mismatched libcurl hosts still configure.
           # Offline: vendor under psxrecomp/lib/recomp-net/third_party/libjuice
-          # or pass -DRNET_LIBJUICE_ROOT=â€¦ / -DRNET_ENABLE_ICE=OFF.
+          # or pass -DRNET_LIBJUICE_ROOT=… / -DRNET_ENABLE_ICE=OFF.
           # Add title-specific -D flags here if needed (e.g. -DMOTK_NATIVE=OFF).
           # Netplay titles: also pass -DPSX_NETPLAY=ON here (belt-and-suspenders
           # when CMakeLists already FORCE-caches it before include(runtime.cmake)).
@@ -631,11 +631,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.prepare.outputs.tag }}
-          # Quoted: titles may contain ':' (e.g. "Marvel vs. Capcom: â€¦").
+          # Quoted: titles may contain ':' (e.g. "Marvel vs. Capcom: …").
           name: "ValkyrieRecomp ${{ needs.prepare.outputs.tag }}"
           files: |
             dist/ValkyrieRecomp-*.zip
           generate_release_notes: true
           fail_on_unmatched_files: true
           target_commitish: ${{ github.sha }}
-
