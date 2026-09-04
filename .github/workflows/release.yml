@@ -533,6 +533,14 @@ jobs:
         run: |
           set -euo pipefail
           chmod +x scripts/package_setup_release.sh
+
+          # Preserve Linux emitter executable permissions in the setup package.
+          if [[ "${{ runner.os }}" == "Linux" ]]; then
+            find build-recompiler -type f \
+              \( -name 'psxrecomp-bios' -o -name 'psxrecomp-game' \) \
+              -exec chmod +x {} +
+          fi
+
           if [[ "${{ runner.os }}" == "Windows" ]]; then
             export PSXRECOMP_RUNTIME_BIN_DIR=/mingw64/bin
             export BPE_RUNTIME_BIN_DIR=/mingw64/bin
