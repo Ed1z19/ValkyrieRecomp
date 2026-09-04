@@ -562,10 +562,10 @@ jobs:
           # artifact, not the intent.
           ZIP=$(ls dist/ValkyrieRecomp-*-"${{ matrix.artifact }}".zip | head -1)
           echo "checking ${ZIP}"
-          MANIFESTS=$(unzip -l "${ZIP}" | grep -c 'mods/packages/.*/manifest\.toml' || true)
+          MANIFESTS=$(unzip -l "${ZIP}" | grep -Ec 'mods/(packages|bundled)/.*/manifest\.toml' || true)
           echo "mod manifests in zip: ${MANIFESTS}"
           if [[ "${MANIFESTS}" -lt 1 ]]; then
-            echo "::error::release zip ships no mod catalog (mods/packages/*/manifest.toml)" >&2
+            echo "::error::release zip ships no mod catalog (mods/packages or mods/bundled)" >&2
             unzip -l "${ZIP}" | head -40 >&2
             exit 1
           fi
