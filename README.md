@@ -45,6 +45,7 @@ All AI-assisted content is reviewed before inclusion.
 
 This repository **does not include the original game disc images** or a retail
 PlayStation BIOS. You must provide your own legally obtained copy of the game.
+
 No ownership claim is made over the original Valkyrie Profile game or its copyrighted assets.
 
 Disc images, saves, local BIOS files and build outputs are excluded by
