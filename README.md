@@ -1,5 +1,9 @@
 # ValkyrieRecomp
 
+<p align="center">
+  <img src="docs/valkyrie-recomp-logo.png" alt="ValkyrieRecomp" width="900">
+</p>
+
 ![Gameplay](docs/preview.png)
 
 A native PC recompilation project for **Valkyrie Profile (PlayStation, USA)**,
