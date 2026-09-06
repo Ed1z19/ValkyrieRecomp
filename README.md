@@ -35,10 +35,17 @@ built with [PSXRecomp](https://github.com/mstan/psxrecomp) and
 | Original publisher | Enix |
 | Original release | 2000 |
 
+## AI Usage Notice
+
+This project may use AI-assisted tools for development, documentation, artwork, or other supporting materials.
+
+All AI-assisted content is reviewed before inclusion.
+
 ## Legal
 
 This repository **does not include the original game disc images** or a retail
 PlayStation BIOS. You must provide your own legally obtained copy of the game.
+No ownership claim is made over the original Valkyrie Profile game or its copyrighted assets.
 
 Disc images, saves, local BIOS files and build outputs are excluded by
 `.gitignore` and must not be committed to this repository.
